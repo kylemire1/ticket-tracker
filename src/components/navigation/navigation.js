@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css";
-import {
-  Container,
-  Navbar,
-  Collapse,
-  NavbarToggler,
-  Nav,
-  NavItem,
-  NavbarBrand
-} from "shards-react";
+import { Navbar, Collapse, NavbarToggler, Nav, NavItem } from "shards-react";
 import { NavLink, Link } from "react-router-dom";
 
 const Navigation = () => {
@@ -24,8 +16,8 @@ const Navigation = () => {
         <NavbarToggler onClick={() => setCollapseOpen(!collapseOpen)} />
         <Collapse
           open={collapseOpen}
-          navbar
           style={{ justifyContent: "flex-end" }}
+          navbar
         >
           <Nav navbar>
             <NavItem>
