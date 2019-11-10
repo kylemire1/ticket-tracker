@@ -1,3 +1,10 @@
 body {
   background: #f9f9f9 !important;
 }
+
+.small-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  font-weight: normal;
+  color: #5a6169;
+}

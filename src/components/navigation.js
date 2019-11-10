@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css";
-import { Navbar, Collapse, NavbarToggler, Nav, NavItem } from "shards-react";
+import {
+  Navbar,
+  Collapse,
+  NavbarToggler,
+  Nav,
+  NavItem,
+  Button
+} from "shards-react";
 import { NavLink, Link } from "react-router-dom";
 
 const Navigation = () => {
@@ -9,7 +16,15 @@ const Navigation = () => {
 
   return (
     <header>
-      <Navbar type="dark" theme="info" expand="md">
+      <Navbar
+        style={{
+          zIndex: 99,
+          background: "white",
+          boxShadow: "-3px 0px 16px 0px rgba(146, 173, 227, 0.26)"
+        }}
+        type="light"
+        expand="md"
+      >
         <Link className="navbar-brand" to="/">
           Ticket Tracker
         </Link>
@@ -20,6 +35,11 @@ const Navigation = () => {
           navbar
         >
           <Nav navbar>
+            <NavItem>
+              <Link to="/ticket-form/create">
+                <Button theme="success">Create Ticket</Button>
+              </Link>
+            </NavItem>
             <NavItem>
               <NavLink exact className="nav-link" to="/">
                 Dashboard

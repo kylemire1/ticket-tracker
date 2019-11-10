@@ -1,0 +1,24 @@
+.collapseBtn {
+  border: none;
+  background: none;
+  display: block;
+  width: 100%;
+  background: white;
+  margin-top: 1em;
+  padding: 1em;
+  box-shadow: rgba(146, 173, 227, 0.26) 4px 5px 16px 0px;
+  border-radius: 5px;
+  border: solid 1px rgba(229, 226, 226, 0.475);
+  z-index: 1;
+  position: relative;
+}
+
+.collapse {
+  z-index: 0;
+  background: white;
+  margin-top: -0.5em;
+
+  p {
+    padding-top: 2em;
+  }
+}
