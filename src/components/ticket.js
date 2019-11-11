@@ -5,7 +5,7 @@ import { MdEdit } from "react-icons/md";
 
 import styles from "./ticket.module.scss";
 
-const Ticket = ({ priority, title, description, estimate, createdBy }) => {
+const Ticket = ({ id, priority, title, description, estimate, createdBy }) => {
   const [open, setOpen] = useState(false);
 
   let badgeColor = "";
@@ -41,7 +41,7 @@ const Ticket = ({ priority, title, description, estimate, createdBy }) => {
             <strong>Created by:</strong> {createdBy}
           </Col>
           <Col lg="2">
-            <Link to="/">
+            <Link to={`/ticket-form/edit/${id}`}>
               <MdEdit />
             </Link>
           </Col>

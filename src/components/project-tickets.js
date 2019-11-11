@@ -32,6 +32,7 @@ const ProjectTickets = props => {
       {tickets.map(ticket => (
         <Ticket
           key={ticket.id}
+          id={ticket.id}
           priority={ticket.priority}
           title={ticket.title}
           description={ticket.description}
