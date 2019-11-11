@@ -9,7 +9,7 @@ const TicketForm = props => {
     <>
       <span className="small-title">{verb}</span>
       <h1>Ticket Form</h1>
-      <Form ticketID={ticketID} />
+      <Form ticketID={ticketID} verb={verb} />
     </>
   );
 };

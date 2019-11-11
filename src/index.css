@@ -2,6 +2,10 @@ body {
   background: #f9f9f9 !important;
 }
 
+a {
+  color: #0072ed;
+}
+
 .small-title {
   font-size: 0.9rem;
   text-transform: uppercase;
