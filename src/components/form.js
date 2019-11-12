@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import {
   Form as ShardsForm,
   FormInput,
@@ -6,24 +7,34 @@ import {
   FormTextarea,
   FormSelect,
   Card,
-  Button
+  Button,
+  Alert
 } from "shards-react";
+
 import { useTickets } from "../hooks/use-tickets";
+import firebase from "../firebase";
+import { useProjects } from "../hooks/use-projects";
 
 const Form = props => {
   const ticket = useTickets(false, props.ticketID);
+  const projects = useProjects();
+
   const [formValues, setFormValues] = useState({
     title: "",
     description: "",
     priority: "",
+    project: "",
     createdBy: ""
   });
+  const [submittedStatus, setSubmittedStatus] = useState("");
 
   useEffect(() => {
+    setSubmittedStatus("");
     setFormValues({
       title: ticket.title ? ticket.title : "",
       description: ticket.description ? ticket.description : "",
       priority: ticket.priority ? ticket.priority : "",
+      project: ticket.project ? ticket.project : "",
       createdBy: ticket.createdBy ? ticket.createdBy : ""
     });
   }, [ticket]);
@@ -36,9 +47,66 @@ const Form = props => {
     });
   };
 
+  const handleSubmit = (e, verb) => {
+    e.preventDefault();
+
+    const { title, description, priority, createdBy, project } = formValues;
+
+    if (verb === "create") {
+      firebase
+        .firestore()
+        .collection("tickets")
+        .add({
+          title,
+          description,
+          priority,
+          project,
+          createdBy
+        })
+        .then(() => {
+          setSubmittedStatus("success");
+        })
+        .catch(error => {
+          setSubmittedStatus("failed");
+          console.error(error);
+        });
+    } else if (verb === "edit") {
+      firebase
+        .firestore()
+        .collection("tickets")
+        .doc(props.ticketID)
+        .set({
+          title,
+          description,
+          priority,
+          project,
+          createdBy
+        })
+        .then(() => {
+          setSubmittedStatus("success");
+        })
+        .catch(error => {
+          setSubmittedStatus("failed");
+          console.error(error);
+        });
+    }
+  };
+
+  let alert = null;
+  if (submittedStatus === "success") {
+    alert = (
+      <Alert theme="success">Your ticket was submitted successfully!</Alert>
+    );
+  } else if (submittedStatus === "failed") {
+    alert = (
+      <Alert theme="danger">There was a problem submitting your ticket.</Alert>
+    );
+  }
+
   return (
     <Card className="p-3">
-      <ShardsForm>
+      {alert}
+      <ShardsForm onSubmit={e => handleSubmit(e, props.verb)}>
         <FormGroup>
           <label htmlFor="title">Title</label>
           <FormInput
@@ -72,6 +140,23 @@ const Form = props => {
             <option value="Low">Low</option>
             <option value="Medium">Medium</option>
             <option value="High">High</option>
+          </FormSelect>
+        </FormGroup>
+        <FormGroup>
+          <label htmlFor="project">Project</label>
+          <FormSelect
+            onChange={e => handleChange(e)}
+            value={formValues.project}
+            name="project"
+            id="project"
+            required
+          >
+            <option value="">Select a Project</option>
+            {projects.map(project => (
+              <option key={project.id} value={project.id}>
+                {project.name}
+              </option>
+            ))}
           </FormSelect>
         </FormGroup>
         <FormGroup>
