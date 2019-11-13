@@ -3,8 +3,11 @@ import React, { useEffect, useState } from "react";
 import firebase from "../firebase";
 import { useTickets } from "../hooks/use-tickets";
 import Ticket from "./ticket";
+import Modal from "./modal";
+import DeleteTicket from "./delete-ticket";
 
 const ProjectTickets = props => {
+  const [modalOpen, setModalOpen] = useState(false);
   const [project, setProject] = useState("");
   const { id } = props.match.params;
 
@@ -25,8 +28,15 @@ const ProjectTickets = props => {
 
   const tickets = useTickets(id);
 
+  const handleModal = () => {
+    setModalOpen(!modalOpen);
+  };
+
   return (
     <>
+      <Modal toggle={() => handleModal()} open={modalOpen}>
+        <DeleteTicket close={() => handleModal()} />
+      </Modal>
       <span className="small-title">{project ? project : "⠀"}</span>
       <h1>Dashboard</h1>
       {tickets.map(ticket => (
@@ -37,6 +47,7 @@ const ProjectTickets = props => {
           title={ticket.title}
           description={ticket.description}
           createdBy={ticket.createdBy}
+          handleModal={() => handleModal()}
         />
       ))}
     </>

@@ -1,12 +1,22 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Badge, Row, Col, Collapse, Container } from "shards-react";
-import { MdEdit } from "react-icons/md";
+import { Badge, Row, Col, Collapse, Container, Card } from "shards-react";
+import { MdEdit, MdDelete, MdExpandMore } from "react-icons/md";
 
 import styles from "./ticket.module.scss";
+import { useProjects } from "../hooks/use-projects";
 
-const Ticket = ({ id, priority, title, description, estimate, createdBy }) => {
+const Ticket = ({
+  id,
+  priority,
+  title,
+  description,
+  projectId,
+  createdBy,
+  handleModal
+}) => {
   const [open, setOpen] = useState(false);
+  const project = useProjects(projectId);
 
   let badgeColor = "";
 
@@ -29,24 +39,37 @@ const Ticket = ({ id, priority, title, description, estimate, createdBy }) => {
 
   return (
     <>
-      <button onClick={() => setOpen(!open)} className={styles.collapseBtn}>
+      <Card className={styles.collapseBtn}>
         <Row>
           <Col lg="2">
-            <Badge theme={badgeColor}>{priority} Priority</Badge>{" "}
+            <MdExpandMore
+              style={{ cursor: "pointer", strokeWidth: 3 }}
+              onClick={() => setOpen(!open)}
+            />
+            <Badge style={{ marginLeft: "2em" }} theme={badgeColor}>
+              {priority} Priority
+            </Badge>{" "}
           </Col>
           <Col lg="4">
             <strong>{title}</strong>
           </Col>
-          <Col lg="4">
+
+          {projectId ? <Col lg="2">{project.name}</Col> : null}
+          <Col lg={projectId ? "3" : "5"}>
             <strong>Created by:</strong> {createdBy}
           </Col>
-          <Col lg="2">
+          <Col lg="1">
             <Link to={`/ticket-form/edit/${id}`}>
               <MdEdit />
-            </Link>
+            </Link>{" "}
+            <MdDelete
+              style={{ cursor: "pointer" }}
+              onClick={() => handleModal()}
+              className="text-danger"
+            />
           </Col>
         </Row>
-      </button>
+      </Card>
       <Collapse className={styles.collapse} open={open}>
         <Container>
           <Row>

@@ -12,3 +12,8 @@ a {
   font-weight: normal;
   color: #5a6169;
 }
+
+.modal-dialog {
+  top: 40%;
+  transform: translateY(-50%) !important;
+}

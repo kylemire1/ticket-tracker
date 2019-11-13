@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
 
 import {
   Form as ShardsForm,
@@ -64,7 +65,7 @@ const Form = props => {
           createdBy
         })
         .then(() => {
-          setSubmittedStatus("success");
+          props.history.push(`/projects/${project}`);
         })
         .catch(error => {
           setSubmittedStatus("failed");
@@ -83,7 +84,7 @@ const Form = props => {
           createdBy
         })
         .then(() => {
-          setSubmittedStatus("success");
+          props.history.push(`/projects/${project}`);
         })
         .catch(error => {
           setSubmittedStatus("failed");
@@ -93,11 +94,7 @@ const Form = props => {
   };
 
   let alert = null;
-  if (submittedStatus === "success") {
-    alert = (
-      <Alert theme="success">Your ticket was submitted successfully!</Alert>
-    );
-  } else if (submittedStatus === "failed") {
+  if (submittedStatus === "failed") {
     alert = (
       <Alert theme="danger">There was a problem submitting your ticket.</Alert>
     );
@@ -178,4 +175,4 @@ const Form = props => {
   );
 };
 
-export default Form;
+export default withRouter(Form);
