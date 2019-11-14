@@ -64,7 +64,7 @@ const Ticket = ({
             </Link>{" "}
             <MdDelete
               style={{ cursor: "pointer" }}
-              onClick={() => handleModal()}
+              onClick={() => handleModal(id)}
               className="text-danger"
             />
           </Col>

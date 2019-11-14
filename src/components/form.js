@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
-
 import {
   Form as ShardsForm,
   FormInput,
@@ -11,12 +10,16 @@ import {
   Button,
   Alert
 } from "shards-react";
+import { MdAddCircleOutline } from "react-icons/md";
 
 import { useTickets } from "../hooks/use-tickets";
 import firebase from "../firebase";
 import { useProjects } from "../hooks/use-projects";
+import Modal from "./modal";
+import AddProject from "./add-project";
 
 const Form = props => {
+  const [modalOpen, setModalOpen] = useState(false);
   const ticket = useTickets(false, props.ticketID);
   const projects = useProjects();
 
@@ -100,78 +103,90 @@ const Form = props => {
     );
   }
 
+  const handleModal = () => {
+    setModalOpen(!modalOpen);
+  };
+
   return (
-    <Card className="p-3">
-      {alert}
-      <ShardsForm onSubmit={e => handleSubmit(e, props.verb)}>
-        <FormGroup>
-          <label htmlFor="title">Title</label>
-          <FormInput
-            onChange={e => handleChange(e)}
-            value={formValues.title}
-            name="title"
-            id="title"
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          <label htmlFor="description">Description</label>
-          <FormTextarea
-            onChange={e => handleChange(e)}
-            value={formValues.description}
-            name="description"
-            id="description"
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          <label htmlFor="priority">Priority</label>
-          <FormSelect
-            onChange={e => handleChange(e)}
-            value={formValues.priority}
-            name="priority"
-            id="priority"
-            required
-          >
-            <option value="">Select a Priority</option>
-            <option value="Low">Low</option>
-            <option value="Medium">Medium</option>
-            <option value="High">High</option>
-          </FormSelect>
-        </FormGroup>
-        <FormGroup>
-          <label htmlFor="project">Project</label>
-          <FormSelect
-            onChange={e => handleChange(e)}
-            value={formValues.project}
-            name="project"
-            id="project"
-            required
-          >
-            <option value="">Select a Project</option>
-            {projects.map(project => (
-              <option key={project.id} value={project.id}>
-                {project.name}
-              </option>
-            ))}
-          </FormSelect>
-        </FormGroup>
-        <FormGroup>
-          <label htmlFor="createdBy">Created By</label>
-          <FormInput
-            onChange={e => handleChange(e)}
-            value={formValues.createdBy}
-            name="createdBy"
-            id="createdBy"
-            required
-          />
-        </FormGroup>
-        <Button>
-          <span style={{ textTransform: "capitalize" }}>{props.verb}</span>{" "}
-          Ticket
-        </Button>
-      </ShardsForm>
-    </Card>
+    <>
+      <Modal toggle={handleModal} open={modalOpen}>
+        <AddProject close={handleModal} />
+      </Modal>
+      <Card className="p-3">
+        {alert}
+        <ShardsForm onSubmit={e => handleSubmit(e, props.verb)}>
+          <FormGroup>
+            <label htmlFor="title">Title</label>
+            <FormInput
+              onChange={e => handleChange(e)}
+              value={formValues.title}
+              name="title"
+              id="title"
+              required
+            />
+          </FormGroup>
+          <FormGroup>
+            <label htmlFor="description">Description</label>
+            <FormTextarea
+              onChange={e => handleChange(e)}
+              value={formValues.description}
+              name="description"
+              id="description"
+              required
+            />
+          </FormGroup>
+          <FormGroup>
+            <label htmlFor="priority">Priority</label>
+            <FormSelect
+              onChange={e => handleChange(e)}
+              value={formValues.priority}
+              name="priority"
+              id="priority"
+              required
+            >
+              <option value="">Select a Priority</option>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </FormSelect>
+          </FormGroup>
+          <FormGroup>
+            <label htmlFor="project">Project</label>
+            <FormSelect
+              onChange={e => handleChange(e)}
+              value={formValues.project}
+              name="project"
+              id="project"
+              required
+            >
+              <option value="">Select a Project</option>
+              {projects.map(project => (
+                <option key={project.id} value={project.id}>
+                  {project.name}
+                </option>
+              ))}
+            </FormSelect>
+            <Button onClick={handleModal} theme="success" className="mt-3">
+              <MdAddCircleOutline /> Add Project
+            </Button>
+          </FormGroup>
+          <FormGroup>
+            <label htmlFor="createdBy">Created By</label>
+            <FormInput
+              onChange={e => handleChange(e)}
+              value={formValues.createdBy}
+              name="createdBy"
+              id="createdBy"
+              required
+            />
+          </FormGroup>
+          <Button type="submit">
+            <span style={{ textTransform: "capitalize" }}>{props.verb}</span>{" "}
+            Ticket
+          </Button>
+        </ShardsForm>
+      </Card>
+    </>
   );
 };
 

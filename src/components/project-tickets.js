@@ -9,6 +9,7 @@ import DeleteTicket from "./delete-ticket";
 const ProjectTickets = props => {
   const [modalOpen, setModalOpen] = useState(false);
   const [project, setProject] = useState("");
+  const [deletingTicket, setDeletingTicket] = useState(null);
   const { id } = props.match.params;
 
   useEffect(() => {
@@ -28,14 +29,15 @@ const ProjectTickets = props => {
 
   const tickets = useTickets(id);
 
-  const handleModal = () => {
+  const handleModal = ticketId => {
     setModalOpen(!modalOpen);
+    setDeletingTicket(ticketId);
   };
 
   return (
     <>
-      <Modal toggle={() => handleModal()} open={modalOpen}>
-        <DeleteTicket close={() => handleModal()} />
+      <Modal toggle={handleModal} open={modalOpen}>
+        <DeleteTicket ticketId={deletingTicket} close={handleModal} />
       </Modal>
       <span className="small-title">{project ? project : "⠀"}</span>
       <h1>Dashboard</h1>
@@ -47,7 +49,7 @@ const ProjectTickets = props => {
           title={ticket.title}
           description={ticket.description}
           createdBy={ticket.createdBy}
-          handleModal={() => handleModal()}
+          handleModal={handleModal}
         />
       ))}
     </>
