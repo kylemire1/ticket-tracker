@@ -44,10 +44,10 @@ const Form = props => {
   }, [ticket]);
 
   const handleChange = e => {
-    const { name } = e.target;
+    const { name, value } = e.target;
     setFormValues({
       ...formValues,
-      [name]: e.target.value
+      [name]: value
     });
   };
 

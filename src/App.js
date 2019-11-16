@@ -3,38 +3,17 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css";
-import { Container, Row } from "shards-react";
 
-import Navigation from "./components/navigation";
-import Sidebar from "./components/sidebar";
-import AllTickets from "./components/all-tickets";
-import ProjectTickets from "./components/project-tickets";
-import Profile from "./components/profile";
-import TicketForm from "./components/ticket-form";
+import Login from "./components/login";
+import Dashboard from "./components/dashboard";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Navigation />
-      <Container fluid>
-        <Row>
-          <Sidebar />
-          <main className="main-content px-0 py-3 col-sm-12 col-md-9 col-lg-10">
-            <Container>
-              <Route path="/" exact component={AllTickets} />
-              <Route path="/projects/:id" component={ProjectTickets} />
-              <Route path="/profile" component={Profile} />
-              <Switch>
-                <Route
-                  path="/ticket-form/:verb/:ticketID"
-                  component={TicketForm}
-                />
-                <Route path="/ticket-form/:verb" component={TicketForm} />
-              </Switch>
-            </Container>
-          </main>
-        </Row>
-      </Container>
+      <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/" component={Dashboard} />
+      </Switch>
     </BrowserRouter>
   );
 };
