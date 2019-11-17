@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css";
 import {
@@ -10,8 +10,10 @@ import {
   Button
 } from "shards-react";
 import { NavLink, Link } from "react-router-dom";
+import { UserContext } from "../context/user-context";
 
 const Navigation = () => {
+  const { user } = useContext(UserContext);
   const [collapseOpen, setCollapseOpen] = useState(false);
 
   return (
@@ -28,6 +30,7 @@ const Navigation = () => {
         <Link className="navbar-brand" to="/">
           Ticket Tracker
         </Link>
+        Hello, {user.name}
         <NavbarToggler onClick={() => setCollapseOpen(!collapseOpen)} />
         <Collapse
           open={collapseOpen}

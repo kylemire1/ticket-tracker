@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import {
   Container,
@@ -11,20 +11,28 @@ import {
   Alert
 } from "shards-react";
 import firebase from "../firebase";
+import { UserContext } from "../context/user-context";
+import { useUser } from "../hooks/use-user";
 
 const Login = props => {
+  const { user, setUser } = useContext(UserContext);
+
   const [formValues, setFormValues] = useState({
     email: "",
     password: ""
   });
-  const [loggedIn, setLoggedIn] = useState(false);
   const [logInError, setLogInError] = useState("");
 
+  const userInfo = useUser(user.email);
   useEffect(() => {
-    if (loggedIn) {
-      props.history.push("/");
+    if (userInfo) {
+      setUser({
+        ...user,
+        name: userInfo.name,
+        loggedIn: true
+      });
     }
-  }, [loggedIn]);
+  }, [userInfo, user, setUser]);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -44,52 +52,57 @@ const Login = props => {
       .signInWithEmailAndPassword(email, password)
       .then(
         () => {
-          props.history.push("/");
+          setUser({
+            ...user,
+            email
+          });
         },
         err => {
           setLogInError("Incorrect Login Credentials");
-          console.error(err);
         }
       );
   };
 
   return (
-    <Container style={{ height: "100vh" }}>
-      <Row className="h-100 justify-content-center align-items-center">
-        <Card className="p-3 col-6">
-          <h1 className="text-center mb-3">Login</h1>
-          <ShardsForm onSubmit={e => handleSubmit(e)}>
-            <FormGroup>
-              <label htmlFor="email">Email</label>
-              <FormInput
-                id="email"
-                name="email"
-                value={formValues.email}
-                onChange={e => handleChange(e)}
-                required
-              />
-            </FormGroup>
-            <FormGroup>
-              <label htmlFor="password">Password</label>
-              <FormInput
-                type="password"
-                id="password"
-                name="password"
-                value={formValues.password}
-                onChange={e => handleChange(e)}
-                required
-              />
-            </FormGroup>
-            <Button className="mb-3" style={{ width: "100%" }} type="submit">
-              Log In
-            </Button>
-          </ShardsForm>
-          {logInError !== "" ? (
-            <Alert theme="danger">{logInError}</Alert>
-          ) : null}
-        </Card>
-      </Row>
-    </Container>
+    <>
+      {user.loggedIn ? <Redirect to="/" /> : null}
+      <Container style={{ height: "100vh" }}>
+        <Row className="h-100 justify-content-center align-items-center">
+          <Card className="p-3 col-6">
+            <h1 className="text-center mb-3">Login</h1>
+            <ShardsForm onSubmit={e => handleSubmit(e)}>
+              <FormGroup>
+                <label htmlFor="email">Email</label>
+                <FormInput
+                  id="email"
+                  name="email"
+                  value={formValues.email}
+                  onChange={e => handleChange(e)}
+                  required
+                />
+              </FormGroup>
+              <FormGroup>
+                <label htmlFor="password">Password</label>
+                <FormInput
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={formValues.password}
+                  onChange={e => handleChange(e)}
+                  required
+                />
+              </FormGroup>
+              <Button className="mb-3" style={{ width: "100%" }} type="submit">
+                Log In
+              </Button>
+            </ShardsForm>
+            {logInError !== "" ? (
+              <Alert theme="danger">{logInError}</Alert>
+            ) : null}
+          </Card>
+        </Row>
+      </Container>
+    </>
   );
 };
 

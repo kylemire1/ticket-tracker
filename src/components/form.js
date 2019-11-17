@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import {
   Form as ShardsForm,
@@ -12,6 +12,7 @@ import {
 } from "shards-react";
 import { MdAddCircleOutline } from "react-icons/md";
 
+import { UserContext } from "../context/user-context";
 import { useTickets } from "../hooks/use-tickets";
 import firebase from "../firebase";
 import { useProjects } from "../hooks/use-projects";
@@ -19,6 +20,7 @@ import Modal from "./modal";
 import AddProject from "./add-project";
 
 const Form = props => {
+  const { user } = useContext(UserContext);
   const [modalOpen, setModalOpen] = useState(false);
   const ticket = useTickets(false, props.ticketID);
   const projects = useProjects();
@@ -174,7 +176,7 @@ const Form = props => {
             <label htmlFor="createdBy">Created By</label>
             <FormInput
               onChange={e => handleChange(e)}
-              value={formValues.createdBy}
+              value={user.name}
               name="createdBy"
               id="createdBy"
               required
