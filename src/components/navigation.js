@@ -12,9 +12,17 @@ import {
 import { NavLink, Link } from "react-router-dom";
 import { UserContext } from "../context/user-context";
 
-const Navigation = () => {
+import firebase from "../firebase";
+import styles from "./navigation.module.scss";
+
+const Navigation = props => {
   const { user } = useContext(UserContext);
   const [collapseOpen, setCollapseOpen] = useState(false);
+
+  const handleLogOut = () => {
+    firebase.auth().signOut();
+    window.location.reload();
+  };
 
   return (
     <header>
@@ -30,28 +38,29 @@ const Navigation = () => {
         <Link className="navbar-brand" to="/">
           Ticket Tracker
         </Link>
-        Hello, {user.name}
+        <span className={styles.displayName}>Hello, {user.name}</span>
         <NavbarToggler onClick={() => setCollapseOpen(!collapseOpen)} />
         <Collapse
           open={collapseOpen}
           style={{ justifyContent: "flex-end" }}
           navbar
         >
-          <Nav navbar>
-            <NavItem>
-              <Link to="/ticket-form/create">
-                <Button theme="success">Create Ticket</Button>
-              </Link>
-            </NavItem>
+          <Nav className={styles.navigation} navbar>
             <NavItem>
               <NavLink exact className="nav-link" to="/">
                 Dashboard
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="nav-link" to="/profile">
-                Profile
-              </NavLink>
+              <Link to="/ticket-form/create">
+                <Button theme="success">Create Ticket</Button>
+              </Link>
+            </NavItem>
+
+            <NavItem>
+              <Button onClick={handleLogOut} outline theme="primary">
+                Log Out
+              </Button>
             </NavItem>
           </Nav>
         </Collapse>

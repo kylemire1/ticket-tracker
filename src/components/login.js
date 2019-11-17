@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import {
   Container,
@@ -12,27 +12,15 @@ import {
 } from "shards-react";
 import firebase from "../firebase";
 import { UserContext } from "../context/user-context";
-import { useUser } from "../hooks/use-user";
 
 const Login = props => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const [formValues, setFormValues] = useState({
     email: "",
     password: ""
   });
   const [logInError, setLogInError] = useState("");
-
-  const userInfo = useUser(user.email);
-  useEffect(() => {
-    if (userInfo) {
-      setUser({
-        ...user,
-        name: userInfo.name,
-        loggedIn: true
-      });
-    }
-  }, [userInfo, user, setUser]);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -52,10 +40,7 @@ const Login = props => {
       .signInWithEmailAndPassword(email, password)
       .then(
         () => {
-          setUser({
-            ...user,
-            email
-          });
+          console.log("User logged in");
         },
         err => {
           setLogInError("Incorrect Login Credentials");
@@ -65,7 +50,7 @@ const Login = props => {
 
   return (
     <>
-      {user.loggedIn ? <Redirect to="/" /> : null}
+      {user.name && user.email ? <Redirect to="/" /> : null}
       <Container style={{ height: "100vh" }}>
         <Row className="h-100 justify-content-center align-items-center">
           <Card className="p-3 col-6">

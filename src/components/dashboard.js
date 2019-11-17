@@ -10,7 +10,6 @@ import Navigation from "./navigation";
 import Sidebar from "./sidebar";
 import AllTickets from "./all-tickets";
 import ProjectTickets from "./project-tickets";
-import Profile from "./profile";
 import TicketForm from "./ticket-form";
 
 const Dashboard = () => {
@@ -28,7 +27,6 @@ const Dashboard = () => {
               <Container>
                 <Route path="/" exact component={AllTickets} />
                 <Route path="/projects/:id" component={ProjectTickets} />
-                <Route path="/profile" component={Profile} />
                 <Switch>
                   <Route
                     path="/ticket-form/:verb/:ticketID"

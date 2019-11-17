@@ -30,27 +30,29 @@ const Form = props => {
     description: "",
     priority: "",
     project: "",
-    createdBy: ""
+    createdBy: user.name
   });
   const [submittedStatus, setSubmittedStatus] = useState("");
 
   useEffect(() => {
     setSubmittedStatus("");
     setFormValues({
+      ...formValues,
       title: ticket.title ? ticket.title : "",
       description: ticket.description ? ticket.description : "",
       priority: ticket.priority ? ticket.priority : "",
-      project: ticket.project ? ticket.project : "",
-      createdBy: ticket.createdBy ? ticket.createdBy : ""
+      project: ticket.project ? ticket.project : ""
     });
   }, [ticket]);
 
   const handleChange = e => {
     const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
-      [name]: value
-    });
+    if (name !== "createdBy") {
+      setFormValues({
+        ...formValues,
+        [name]: value
+      });
+    }
   };
 
   const handleSubmit = (e, verb) => {
@@ -180,6 +182,7 @@ const Form = props => {
               name="createdBy"
               id="createdBy"
               required
+              readOnly
             />
           </FormGroup>
           <Button type="submit">

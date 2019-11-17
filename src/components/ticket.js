@@ -41,13 +41,13 @@ const Ticket = ({
     <>
       <Card className={styles.collapseBtn}>
         <Row>
-          <Col lg="2">
+          <Col sm="6" lg="2" className={styles.priority}>
             <MdExpandMore
               style={{ cursor: "pointer", strokeWidth: 3 }}
               onClick={() => setOpen(!open)}
             />
-            <Badge style={{ marginLeft: "2em" }} theme={badgeColor}>
-              {priority} Priority
+            <Badge className={styles.priorityBadge} theme={badgeColor}>
+              {priority}
             </Badge>{" "}
           </Col>
           <Col lg="4">
@@ -58,15 +58,20 @@ const Ticket = ({
           <Col lg={projectId ? "3" : "5"}>
             <strong>Created by:</strong> {createdBy}
           </Col>
-          <Col lg="1">
-            <Link to={`/ticket-form/edit/${id}`}>
+          <Col sm="6" lg="1" className={styles.editDelete}>
+            <Link className={styles.controlLink} to={`/ticket-form/edit/${id}`}>
               <MdEdit />
             </Link>{" "}
-            <MdDelete
-              style={{ cursor: "pointer" }}
-              onClick={() => handleModal(id)}
-              className="text-danger"
-            />
+            <a className={styles.controlLink} href="/">
+              <MdDelete
+                style={{ cursor: "pointer" }}
+                onClick={e => {
+                  e.preventDefault();
+                  handleModal(id);
+                }}
+                className="text-danger"
+              />
+            </a>
           </Col>
         </Row>
       </Card>

@@ -1,0 +1,31 @@
+.displayName {
+  display: block;
+  margin-left: -1.6em;
+}
+
+.navigation {
+  background: #fbfbfb;
+  li {
+    text-align: center;
+
+    &:not(:first-child) {
+      margin: 0.5em 0;
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .navigation {
+    background: white;
+    padding-top: 0;
+    li {
+      text-align: center;
+      &:not(:first-child) {
+        margin: 0 1em;
+      }
+    }
+  }
+  .displayName {
+    margin-left: 0;
+  }
+}
