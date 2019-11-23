@@ -84,6 +84,16 @@ const Login = props => {
             {logInError !== "" ? (
               <Alert theme="danger">{logInError}</Alert>
             ) : null}
+            <Alert theme="light">
+              <p style={{ fontWeight: "bold" }}>
+                Guest login credentials with read-only permissions:
+              </p>
+              <p>
+                Email: test@test.com
+                <br />
+                Password: testing
+              </p>
+            </Alert>
           </Card>
         </Row>
       </Container>
