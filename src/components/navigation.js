@@ -21,7 +21,7 @@ const Navigation = props => {
 
   const handleLogOut = () => {
     firebase.auth().signOut();
-    window.location.reload();
+    window.location.href = "/";
   };
 
   return (
@@ -32,10 +32,10 @@ const Navigation = props => {
           background: "white",
           boxShadow: "-3px 0px 16px 0px rgba(146, 173, 227, 0.26)"
         }}
-        type="light"
-        expand="md"
+        type='light'
+        expand='md'
       >
-        <Link className="navbar-brand" to="/">
+        <Link className='navbar-brand' to='/'>
           Ticket Tracker
         </Link>
         <span className={styles.displayName}>Hello, {user.name}</span>
@@ -47,18 +47,18 @@ const Navigation = props => {
         >
           <Nav className={styles.navigation} navbar>
             <NavItem>
-              <NavLink exact className="nav-link" to="/">
+              <NavLink exact className='nav-link' to='/'>
                 Dashboard
               </NavLink>
             </NavItem>
             <NavItem>
-              <Link to="/ticket-form/create">
-                <Button theme="success">Create Ticket</Button>
+              <Link to='/ticket-form/create'>
+                <Button theme='success'>Create Ticket</Button>
               </Link>
             </NavItem>
 
             <NavItem>
-              <Button onClick={handleLogOut} outline theme="primary">
+              <Button onClick={handleLogOut} outline theme='primary'>
                 Log Out
               </Button>
             </NavItem>
