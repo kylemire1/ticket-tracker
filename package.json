@@ -13,7 +13,7 @@
     "react-dom": "^16.11.0",
     "react-icons": "^3.8.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0",
+    "react-scripts": "^3.3.0",
     "react-slugify": "^2.0.1",
     "shards-react": "^1.0.3"
   },
@@ -21,7 +21,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "serve": "react-scripts serve",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -38,5 +38,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "jest-cli": "^24.9.0"
   }
 }

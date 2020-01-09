@@ -39,7 +39,7 @@ const ProjectTickets = props => {
       <Modal toggle={handleModal} open={modalOpen}>
         <DeleteTicket ticketId={deletingTicket} close={handleModal} />
       </Modal>
-      <span className="small-title">{project ? project : "⠀"}</span>
+      <span className='small-title'>{project ? project : "Loading..."}</span>
       <h1>Dashboard</h1>
       {tickets.map(ticket => (
         <Ticket

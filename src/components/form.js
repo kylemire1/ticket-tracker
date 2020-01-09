@@ -43,6 +43,7 @@ const Form = props => {
       priority: ticket.priority ? ticket.priority : "",
       project: ticket.project ? ticket.project : ""
     });
+    // eslint-disable-next-line
   }, [ticket]);
 
   const handleChange = e => {
@@ -103,7 +104,7 @@ const Form = props => {
   let alert = null;
   if (submittedStatus === "failed") {
     alert = (
-      <Alert theme="danger">There was a problem submitting your ticket.</Alert>
+      <Alert theme='danger'>There was a problem submitting your ticket.</Alert>
     );
   }
 
@@ -116,76 +117,76 @@ const Form = props => {
       <Modal toggle={handleModal} open={modalOpen}>
         <AddProject close={handleModal} />
       </Modal>
-      <Card className="p-3">
+      <Card className='p-3'>
         {alert}
         <ShardsForm onSubmit={e => handleSubmit(e, props.verb)}>
           <FormGroup>
-            <label htmlFor="title">Title</label>
+            <label htmlFor='title'>Title</label>
             <FormInput
               onChange={e => handleChange(e)}
               value={formValues.title}
-              name="title"
-              id="title"
+              name='title'
+              id='title'
               required
             />
           </FormGroup>
           <FormGroup>
-            <label htmlFor="description">Description</label>
+            <label htmlFor='description'>Description</label>
             <FormTextarea
               onChange={e => handleChange(e)}
               value={formValues.description}
-              name="description"
-              id="description"
+              name='description'
+              id='description'
               required
             />
           </FormGroup>
           <FormGroup>
-            <label htmlFor="priority">Priority</label>
+            <label htmlFor='priority'>Priority</label>
             <FormSelect
               onChange={e => handleChange(e)}
               value={formValues.priority}
-              name="priority"
-              id="priority"
+              name='priority'
+              id='priority'
               required
             >
-              <option value="">Select a Priority</option>
-              <option value="Low">Low</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
+              <option value=''>Select a Priority</option>
+              <option value='Low'>Low</option>
+              <option value='Medium'>Medium</option>
+              <option value='High'>High</option>
             </FormSelect>
           </FormGroup>
           <FormGroup>
-            <label htmlFor="project">Project</label>
+            <label htmlFor='project'>Project</label>
             <FormSelect
               onChange={e => handleChange(e)}
               value={formValues.project}
-              name="project"
-              id="project"
+              name='project'
+              id='project'
               required
             >
-              <option value="">Select a Project</option>
+              <option value=''>Select a Project</option>
               {projects.map(project => (
                 <option key={project.id} value={project.id}>
                   {project.name}
                 </option>
               ))}
             </FormSelect>
-            <Button onClick={handleModal} theme="success" className="mt-3">
+            <Button onClick={handleModal} theme='success' className='mt-3'>
               <MdAddCircleOutline /> Add Project
             </Button>
           </FormGroup>
           <FormGroup>
-            <label htmlFor="createdBy">Created By</label>
+            <label htmlFor='createdBy'>Created By</label>
             <FormInput
               onChange={e => handleChange(e)}
               value={user.name}
-              name="createdBy"
-              id="createdBy"
+              name='createdBy'
+              id='createdBy'
               required
               readOnly
             />
           </FormGroup>
-          <Button type="submit">
+          <Button type='submit'>
             <span style={{ textTransform: "capitalize" }}>{props.verb}</span>{" "}
             Ticket
           </Button>
